@@ -1,5 +1,6 @@
 package com.luaramartins.hexagonapp.presentation
 
+import android.content.Intent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -113,17 +115,12 @@ fun Fab(
     scope: CoroutineScope,
     scaffoldState: ScaffoldState
 ) {
+    val context = LocalContext.current
     FloatingActionButton(
         containerColor = colorResource(id = R.color.colorBackgroundSecond),
         onClick = {
-            scope.launch {
-                scaffoldState.snackbarHostState
-                    .showSnackbar(
-                        "Mensagem disponível, pronto!",
-                        actionLabel = "Aceitar",
-                        duration = SnackbarDuration.Indefinite
-                    )
-            }
+            val intent = Intent(context, AddPersonActivity::class.java)
+            context.startActivity(intent)
         },
         shape = androidx.compose.foundation.shape.CircleShape
     ) {
