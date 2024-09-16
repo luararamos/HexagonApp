@@ -19,11 +19,12 @@ import com.luaramartins.hexagonapp.ui.theme.MIN_INPUT_WIDTH
 
 @Composable
 fun CircularImage(
-    image: Painter
+    image: Painter,
+    modifier: Modifier
 ) {
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .padding(horizontal = MEDIUM_PADDING, vertical = MEDIUM_PADDING)
             .size(width = MIN_INPUT_WIDTH, height = MIN_INPUT_HEIGHT)
             .clip(RoundedCornerShape(CORNER_RADIUS_32))

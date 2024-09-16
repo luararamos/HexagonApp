@@ -107,7 +107,7 @@ fun AddPersonFormScreen() {
 
                         Spacer(modifier = Modifier.width(32.dp))
                         imageUri?.let {
-                            CircularImage(image = rememberImagePainter(it))
+                            CircularImage(image = rememberImagePainter(it), modifier = Modifier)
                         } ?: Text(
                             modifier = Modifier
                                 .size(width = BIG_INPUT_WIDTH, height = BIG_INPUT_HEIGHT),
