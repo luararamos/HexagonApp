@@ -15,10 +15,8 @@ object DateFormatter {
             formatted.append(digits[i])
         }
 
-        // Limitar o texto formatado para "dd/MM/yyyy"
         val finalText = formatted.toString().take(10)
 
-        // Garantir que o cursor não esteja fora do texto formatado
         if (newCursorPosition > finalText.length) {
             newCursorPosition = finalText.length
         }
