@@ -12,7 +12,6 @@ import com.luaramartins.hexagonapp.R
 import com.luaramartins.hexagonapp.common.CpfFormatter
 import com.luaramartins.hexagonapp.common.DateFormatter
 import com.luaramartins.hexagonapp.common.ValidationPerson
-import com.luaramartins.hexagonapp.data.local.Person
 import com.luaramartins.hexagonapp.domain.PersonRepository
 
 class AddPersonViewModel(
@@ -50,18 +49,16 @@ class AddPersonViewModel(
 
     fun insertPerson() {
         personRepository.insertPerson(
-            Person(
-                name = name.value?.text ?: "",
-                dateOfBirth = date.value?.text ?: "",
-                cpf = cpf.value?.text ?: "",
-                city = city.value?.text ?: "",
-                photoPath = photoUri.value.toString() ?: "",
-                active = true
-            )
-
+            name = name.value?.text ?: "",
+            dateOfBirth = date.value?.text ?: "",
+            cpf = cpf.value?.text ?: "",
+            city = city.value?.text ?: "",
+            photoPath = photoUri.value ?: null,
+            active = true
         )
 
     }
+
     fun setPhotoUri(uri: Uri?) {
         _photoUri.value = uri
     }

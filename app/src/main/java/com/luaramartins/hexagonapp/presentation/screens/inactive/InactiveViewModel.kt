@@ -18,7 +18,7 @@ class InactiveViewModel (
 
     init {
         viewModelScope.launch {
-            personRepository.getAllActivePerson().collect { personList ->
+            personRepository.getAllInactivePerson().collect { personList ->
                 _persons.value = personList
             }
         }

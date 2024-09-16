@@ -1,5 +1,6 @@
 package com.luaramartins.hexagonapp.presentation.di
 
+import com.luaramartins.hexagonapp.presentation.screens.EditViewModel
 import com.luaramartins.hexagonapp.presentation.screens.addPerson.AddPersonViewModel
 import com.luaramartins.hexagonapp.presentation.screens.home.HomeViewModel
 import com.luaramartins.hexagonapp.presentation.screens.inactive.InactiveViewModel
@@ -11,4 +12,5 @@ val viewModelModule = module {
     viewModel { AddPersonViewModel(androidContext(), get()) }
     viewModel { HomeViewModel(get()) }
     viewModel { InactiveViewModel(get()) }
+    viewModel { EditViewModel(get()) }
 }

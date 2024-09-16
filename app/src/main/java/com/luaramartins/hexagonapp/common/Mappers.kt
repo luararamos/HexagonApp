@@ -8,6 +8,7 @@ import java.util.Locale
 
 fun Person.toPersonView(): PersonView {
     return PersonView(
+        id = this.id,
         name = this.name,
         dateOfBirth = this.dateOfBirth.calculateAge(),
         cpf = this.cpf,

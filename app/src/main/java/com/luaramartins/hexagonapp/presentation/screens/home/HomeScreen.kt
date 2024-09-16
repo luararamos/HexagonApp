@@ -19,16 +19,6 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun HomeScreen() {
 
-    val mockPersonView = PersonView(
-        name = "Lise",
-        dateOfBirth = "27",
-        cpf = "44579251873",
-        city = "São Paulo",
-        photo = "",
-        active = true
-    )
-    val mockList = listOf<PersonView>(mockPersonView, mockPersonView, mockPersonView)
-
     val viewModel: HomeViewModel = getViewModel()
 
     val listPerson by viewModel.persons.collectAsState()
