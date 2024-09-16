@@ -21,11 +21,11 @@ As seguintes ferramentas foram utilizadas na construção do projeto:
 - Arquitetura MVVM + Clean Architecture
 
 ## 💻 Decisões de Desenvolvimento
-- Utilização de Jetpack Compose para a construção da interface do usuário, aproveitando o poder dos componentes declarativos e reativos.
-- Uso de Koin como framework de injeção de dependência para uma configuração simplificada e gestão de dependências.
-- Implementação de Room para gerenciamento local de banco de dados, facilitando operações de leitura e escrita.
+- Utilização de Jetpack Compose para a construção da interface do usuário.
+- Uso de Koin como framework de injeção de dependência para gestão de dependências.
+- Implementação de Room para gerenciamento local de banco de dados.
 - Utilização de State e LiveData para gerenciar e observar mudanças de estado na interface do usuário.
-- Implementação de navegação entre telas utilizando o Navigation Compose para uma navegação fluída e intuitiva.
+- Implementação de navegação entre telas utilizando o Navigation Compose.
 - Coroutines são usadas para operações assíncronas, permitindo uma execução eficiente de tarefas em segundo plano.
 
 
