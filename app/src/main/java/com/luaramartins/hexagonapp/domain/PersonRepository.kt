@@ -14,6 +14,10 @@ interface PersonRepository {
         active : Boolean
     )
 
+    fun getPersonById(personId: Int): Flow<Person>
+
+    fun updatePerson(person: Person)
+
     fun getAllActivePerson(): Flow<List<Person>>
 
     fun getAllInactivePerson(): Flow<List<Person>>

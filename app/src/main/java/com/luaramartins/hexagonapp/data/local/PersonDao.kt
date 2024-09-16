@@ -12,6 +12,11 @@ interface PersonDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPerson(person: Person)
 
+
+
+    @Query("SELECT * FROM Person WHERE id = :personId")
+    fun getPersonById(personId: Int): Flow<Person>
+
     @Update
     suspend fun updatePerson(person: Person)
 

@@ -31,6 +31,16 @@ class PersonRepositoryImpl(val context: Context,private val personDao: PersonDao
         }
     }
 
+    override fun getPersonById(personId: Int): Flow<Person> {
+        return personDao.getPersonById(personId)
+    }
+
+    override fun updatePerson(person: Person) {
+        CoroutineScope(Dispatchers.Main).launch {
+            personDao.updatePerson(person)
+        }
+    }
+
     override fun getAllActivePerson(): Flow<List<Person>> {
         return personDao.getAllActivePerson()
     }

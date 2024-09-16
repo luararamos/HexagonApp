@@ -8,16 +8,21 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.luaramartins.hexagonapp.R
 import com.luaramartins.hexagonapp.common.CpfFormatter
 import com.luaramartins.hexagonapp.common.DateFormatter
 import com.luaramartins.hexagonapp.common.ValidationPerson
+import com.luaramartins.hexagonapp.data.local.Person
+import com.luaramartins.hexagonapp.data.local.saveImageToInternalStorage
 import com.luaramartins.hexagonapp.domain.PersonRepository
+import kotlinx.coroutines.launch
 
 class AddPersonViewModel(
     private val applicationContext: Context,
     private val personRepository: PersonRepository
 ) : ViewModel() {
+
     val name = MutableLiveData<TextFieldValue>(TextFieldValue(""))
     val nameValid = MutableLiveData<Boolean>(true)
     val nameErrorMessage = MutableLiveData<String>("")
@@ -37,14 +42,6 @@ class AddPersonViewModel(
     private val _photoUri = mutableStateOf<Uri?>(null)
     val photoUri: State<Uri?> = _photoUri
 
-    private var _state = mutableStateOf("")
-    val state: State<String> = _state
-
-    private var _isLoading = mutableStateOf(false)
-    val isLoading: State<Boolean> = _isLoading
-
-    private var _errorMessage = mutableStateOf("")
-    val errorMessage: State<String> = _errorMessage
 
 
     fun insertPerson() {
@@ -61,6 +58,37 @@ class AddPersonViewModel(
 
     fun setPhotoUri(uri: Uri?) {
         _photoUri.value = uri
+    }
+
+    fun loadPersonData(personId: Int) {
+        viewModelScope.launch {
+            personRepository.getPersonById(personId).collect { person ->
+                name.value = TextFieldValue(person.name)
+                date.value = TextFieldValue(person.dateOfBirth)
+                cpf.value = TextFieldValue(person.cpf)
+                city.value = TextFieldValue(person.city)
+                _photoUri.value = person.photoPath?.let { Uri.parse(it) }
+            }
+        }
+    }
+
+    fun updatePerson(personId: Int) {
+        viewModelScope.launch {
+            val photo = saveImageToInternalStorage(applicationContext, photoUri.value ?: null) ?: ""
+            personRepository.updatePerson(
+                Person(
+                    id = personId,
+                    name = name.value?.text ?: "",
+                    dateOfBirth = date.value?.text ?: "",
+                    cpf = cpf.value?.text ?: "",
+                    city = city.value?.text ?: "",
+                    photoPath = photo ?: "",
+                    active = true
+
+                )
+
+            )
+        }
     }
 
     fun onNameChanged(name: TextFieldValue) {
