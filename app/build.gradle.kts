@@ -53,17 +53,33 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    // Jetpack Compose dependencies
     implementation ("androidx.activity:activity-compose:1.8.2")
     implementation (platform("androidx.compose:compose-bom:2022.10.00"))
-    implementation ("androidx.compose.ui:ui")
-    implementation ("androidx.compose.ui:ui-graphics")
-    implementation ("androidx.compose.ui:ui-tooling-preview")
-    implementation ("androidx.compose.material3:material3-android:1.2.0-rc01")
+    implementation ("androidx.compose.ui:ui:1.5.0")
+    implementation ("androidx.compose.ui:ui-graphics:1.5.0")
+    implementation ("androidx.compose.ui:ui-tooling-preview:1.5.0")
+    implementation ("androidx.compose.material:material:1.5.0")
+    implementation ("androidx.compose.material3:material3:1.1.0")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1")
+    implementation ("androidx.compose.runtime:runtime-livedata:1.5.0")
+    implementation ("androidx.compose.runtime:runtime:1.5.0")
 
-    implementation ("androidx.compose.ui:ui:1.3.1")
-    implementation ("androidx.compose.material:material:1.3.1")
-    implementation ("androidx.compose.ui:ui-tooling-preview:1.3.1")
+    // Jetpack Compose toolings
+    debugImplementation("androidx.compose.ui:ui-tooling:1.5.0")
+
+    // Other dependencies
     implementation ("androidx.constraintlayout:constraintlayout-compose:1.0.1")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0")
+    implementation("androidx.navigation:navigation-compose:2.8.0")
+
+
+    // Koin for Dependency Injection
+    implementation("io.insert-koin:koin-android:3.4.0")
+    implementation("io.insert-koin:koin-core:3.4.0")
+    implementation("io.insert-koin:koin-android-compat:3.4.0")
+    implementation ("io.insert-koin:koin-androidx-compose:3.4.0")
+
+    implementation("io.coil-kt:coil-compose:2.1.0")
+
 
 }
