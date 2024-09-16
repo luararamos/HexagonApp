@@ -18,6 +18,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -46,7 +47,9 @@ import com.luaramartins.hexagonapp.ui.theme.MEDIUM_PADDING
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun AddPersonFormScreen() {
+fun AddPersonFormScreen(
+    idPerson: Int? = null
+) {
     val context = LocalContext.current
 
     val viewModel: AddPersonViewModel = getViewModel()
@@ -69,6 +72,12 @@ fun AddPersonFormScreen() {
 
     var imageUri by remember { mutableStateOf<Uri?>(null) }
 
+
+    LaunchedEffect(idPerson) {
+        if (idPerson != null) {
+            viewModel.loadPersonData(idPerson)
+        }
+    }
 
     LazyColumn {
         item {
@@ -117,6 +126,7 @@ fun AddPersonFormScreen() {
 
                         ImagePicker(onImageUriSelected = { uri ->
                             imageUri = uri
+                            viewModel.setPhotoUri(uri)
                         })
                     }
 
@@ -196,7 +206,16 @@ fun AddPersonFormScreen() {
                         onTextChange = { viewModel.onCityChanged(it) }
                     )
 
-                    ButtonAction(text = stringResource(id = R.string.save)) {
+                    ButtonAction(
+                        text = stringResource(
+                            id = if (idPerson != null) R.string.edit  else R.string.save
+                        )) {
+
+                        if (idPerson != null) {
+                            viewModel.updatePerson(idPerson)
+                        } else {
+                            viewModel.insertPerson()
+                        }
                         (context as? Activity)?.finish()
                     }
 

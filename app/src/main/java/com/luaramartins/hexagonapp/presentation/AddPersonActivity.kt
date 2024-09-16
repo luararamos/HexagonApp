@@ -10,6 +10,13 @@ class AddPersonActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AddPersonFormScreen()
+
+            val personId = intent.getIntExtra("PERSON_ID", -1)
+            if (personId != -1) {
+                AddPersonFormScreen(personId)
+            }
         }
+
+
     }
 }

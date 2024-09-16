@@ -4,9 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.luaramartins.hexagonapp.presentation.screens.HomeScreen
-import com.luaramartins.hexagonapp.presentation.screens.InactiveScreen
-import com.luaramartins.hexagonapp.presentation.screens.InfoScreen
+import com.luaramartins.hexagonapp.presentation.screens.home.HomeScreen
+import com.luaramartins.hexagonapp.presentation.screens.inactive.InactiveScreen
+import com.luaramartins.hexagonapp.presentation.screens.info.InfoScreen
 
 @Composable
 fun NavigationHost(navController: NavHostController) {

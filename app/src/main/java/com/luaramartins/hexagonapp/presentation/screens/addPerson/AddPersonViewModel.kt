@@ -1,21 +1,28 @@
 package com.luaramartins.hexagonapp.presentation.screens.addPerson
 
 import android.content.Context
-import android.view.textclassifier.TextSelection
+import android.net.Uri
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.luaramartins.hexagonapp.R
 import com.luaramartins.hexagonapp.common.CpfFormatter
 import com.luaramartins.hexagonapp.common.DateFormatter
 import com.luaramartins.hexagonapp.common.ValidationPerson
+import com.luaramartins.hexagonapp.data.local.Person
+import com.luaramartins.hexagonapp.data.local.saveImageToInternalStorage
+import com.luaramartins.hexagonapp.domain.PersonRepository
+import kotlinx.coroutines.launch
 
 class AddPersonViewModel(
     private val applicationContext: Context,
+    private val personRepository: PersonRepository
 ) : ViewModel() {
+
     val name = MutableLiveData<TextFieldValue>(TextFieldValue(""))
     val nameValid = MutableLiveData<Boolean>(true)
     val nameErrorMessage = MutableLiveData<String>("")
@@ -32,14 +39,57 @@ class AddPersonViewModel(
     val cityValid = MutableLiveData<Boolean>(true)
     val cityErrorMessage = MutableLiveData<String>("")
 
-    private var _state = mutableStateOf("")
-    val state: State<String> = _state
+    private val _photoUri = mutableStateOf<Uri?>(null)
+    val photoUri: State<Uri?> = _photoUri
 
-    private var _isLoading = mutableStateOf(false)
-    val isLoading: State<Boolean> = _isLoading
 
-    private var _errorMessage = mutableStateOf("")
-    val errorMessage: State<String> = _errorMessage
+
+    fun insertPerson() {
+        personRepository.insertPerson(
+            name = name.value?.text ?: "",
+            dateOfBirth = date.value?.text ?: "",
+            cpf = cpf.value?.text ?: "",
+            city = city.value?.text ?: "",
+            photoPath = photoUri.value ?: null,
+            active = true
+        )
+
+    }
+
+    fun setPhotoUri(uri: Uri?) {
+        _photoUri.value = uri
+    }
+
+    fun loadPersonData(personId: Int) {
+        viewModelScope.launch {
+            personRepository.getPersonById(personId).collect { person ->
+                name.value = TextFieldValue(person.name)
+                date.value = TextFieldValue(person.dateOfBirth)
+                cpf.value = TextFieldValue(person.cpf)
+                city.value = TextFieldValue(person.city)
+                _photoUri.value = person.photoPath?.let { Uri.parse(it) }
+            }
+        }
+    }
+
+    fun updatePerson(personId: Int) {
+        viewModelScope.launch {
+            val photo = saveImageToInternalStorage(applicationContext, photoUri.value ?: null) ?: ""
+            personRepository.updatePerson(
+                Person(
+                    id = personId,
+                    name = name.value?.text ?: "",
+                    dateOfBirth = date.value?.text ?: "",
+                    cpf = cpf.value?.text ?: "",
+                    city = city.value?.text ?: "",
+                    photoPath = photo ?: "",
+                    active = true
+
+                )
+
+            )
+        }
+    }
 
     fun onNameChanged(name: TextFieldValue) {
         this.name.value = name
@@ -49,7 +99,10 @@ class AddPersonViewModel(
     }
 
     fun onDataChanged(date: TextFieldValue) {
-        val (formattedDate, newCursorPosition) = DateFormatter.formatDate(date.text, date.selection.start)
+        val (formattedDate, newCursorPosition) = DateFormatter.formatDate(
+            date.text,
+            date.selection.start
+        )
         this.date.value = TextFieldValue(formattedDate, TextRange(newCursorPosition))
         dateValid.value = ValidationPerson.isValidDate(formattedDate)
         dateErrorMessage.value =
@@ -57,7 +110,10 @@ class AddPersonViewModel(
     }
 
     fun onCpfChanged(cpf: TextFieldValue) {
-        val (formattedCpf, newCursorPosition) = CpfFormatter.formatCpf(cpf.text, cpf.selection.start)
+        val (formattedCpf, newCursorPosition) = CpfFormatter.formatCpf(
+            cpf.text,
+            cpf.selection.start
+        )
         this.cpf.value = TextFieldValue(formattedCpf, TextRange(newCursorPosition))
         cpfValid.value = ValidationPerson.isValidCpf(formattedCpf)
         cpfErrorMessage.value =

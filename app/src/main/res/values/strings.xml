@@ -15,6 +15,7 @@
     <string name="cpf_error">Insira um cpf válido</string>
     <string name="city_error">Cidade deve ter mais de 3 caracteres</string>
     <string name="save">Salvar</string>
+    <string name="edit">Editar</string>
     <string name="person_name">Nome: </string>
     <string name="person_age">Idade: </string>
     <string name="app_info_description">

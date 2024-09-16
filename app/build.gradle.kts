@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("kotlin-kapt")
 }
 
 android {
@@ -80,6 +81,18 @@ dependencies {
     implementation ("io.insert-koin:koin-androidx-compose:3.4.0")
 
     implementation("io.coil-kt:coil-compose:2.1.0")
+
+    //ROOM
+    implementation ("androidx.room:room-runtime:2.6.1")
+    kapt ("androidx.room:room-compiler:2.6.1")
+    implementation ("androidx.room:room-ktx:2.6.1")
+    implementation ("androidx.room:room-paging:2.6.1")
+
+    // Coroutines Core
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+
+    // Coroutines Android (necessário para lidar com o ciclo de vida no Android)
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
 
 }
