@@ -22,7 +22,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.0"
+        kotlinCompilerExtensionVersion = "1.5.14"
     }
 
     buildTypes {
@@ -54,21 +54,21 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     
-    implementation ("androidx.activity:activity-compose:1.8.2")
-    implementation (platform("androidx.compose:compose-bom:2022.10.00"))
-    implementation ("androidx.compose.ui:ui:1.5.0")
-    implementation ("androidx.compose.ui:ui-graphics:1.5.0")
-    implementation ("androidx.compose.ui:ui-tooling-preview:1.5.0")
-    implementation ("androidx.compose.material:material:1.5.0")
-    implementation ("androidx.compose.material3:material3:1.1.0")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1")
-    implementation ("androidx.compose.runtime:runtime-livedata:1.5.0")
-    implementation ("androidx.compose.runtime:runtime:1.5.0")
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-graphics")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.compose.material:material")
+    implementation("androidx.compose.material3:material3")
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation("androidx.compose.runtime:runtime-livedata")
+    implementation("androidx.compose.runtime:runtime")
 
-    debugImplementation("androidx.compose.ui:ui-tooling:1.5.0")
+    debugImplementation("androidx.compose.ui:ui-tooling")
 
-    implementation ("androidx.constraintlayout:constraintlayout-compose:1.0.1")
-    implementation("androidx.navigation:navigation-compose:2.8.0")
+    implementation(libs.androidx.constraintlayout.compose)
+    implementation(libs.androidx.navigation.compose)
 
     implementation("io.insert-koin:koin-android:3.4.0")
     implementation("io.insert-koin:koin-core:3.4.0")
